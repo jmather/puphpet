@@ -1,0 +1,3 @@
+api.configuration.validate:
+    pattern:   /configuration/validate
+    defaults:  { _controller: PuphpetApiBundle:Configuration:validate }

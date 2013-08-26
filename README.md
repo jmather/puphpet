@@ -14,7 +14,7 @@ If you're unfamiliar with either Vagrant or Puppet, I wrote a blog titled
 
 ## How? ##
 
-Built on top of the great [Silex](http://silex.sensiolabs.org) framework, we use PHP to generate a custom Vagrantfile
+Built on top of the great [Symfony2](http://symfony.com) framework, we use PHP to generate a custom Vagrantfile
 and Puppet manifest with your custom choices.
 
 ## Why? ##
@@ -47,7 +47,7 @@ greater. Vagrant will run on Windows, OS X and Linux.
 ### Requirements ###
 * PHP 5.4
 * For executing all the tests [puppet-lint](http://packages.ubuntu.com/precise/puppet-lint) has to be installed on your machine
-* some [Silex](http://silex.sensiolabs.org/ "Silex") knowledge
+* some [Symfony2](http://symfony.com/ "Symfony2") knowledge
 
 ### The all-in-one solution ###
 * go to our [quickstart page](https://puphpet.com/quickstart/puphpet "quickstart") and download the vagrant archive
@@ -88,7 +88,7 @@ Setup:
 Before you create a PR you should go sure that everything works well and you didn't break anything.
 Running the tests is quite simple as PHPUnit is already installed by Composer and you only have to call its runner.
 
-    $ ./vendor/bin/phpunit
+    $ ./vendor/bin/phpunit -c app/
 
 ## Used third-party Puppet Modules ##
 * PHP: [https://github.com/example42/puppet-php](https://github.com/example42/puppet-php "example42/puppet-php")

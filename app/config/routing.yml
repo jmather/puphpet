@@ -1,0 +1,8 @@
+puphpet_api:
+    resource: "@PuphpetApiBundle/Resources/config/routing.yml"
+    prefix:   /api
+
+puphpet_configuration:
+    resource: "@PuphpetConfigurationBundle/Resources/config/routing.yml"
+    prefix:   /
+

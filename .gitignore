@@ -1,9 +1,9 @@
-cache/*.pp
-config/prod.yml
-log
-tests/codeCoverage
+app/cache/*
+app/logs/*
+config/parameters.yml
+build/coverage
 web/coverage
 phpunit.xml
-twig.cache
 /vendor
 .idea
+bin/sync.sh
