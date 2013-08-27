@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="config.ext.puphpet.ns">Puphpet\Bundle\ConfigurationBundle\Extension\Puphpet</parameter>
+    </parameters>
+
+    <services>
+        <!--
+        first configuration extension
+        extension supports now:
+        {
+          'puphpet': ....
+        }
+        -->
+        <service id="configuration.extension.puphpet" class="%config.ext.puphpet.ns%\PuphpetDto">
+            <tag name="configuration.extension" configuration="puphpet" />
+        </service>
+
+        <service id="configuration.type.extension.puphpet" class="%config.ext.puphpet.ns%\Form\EventListener\PuphpetTypeSubscriber">
+            <tag name="configuration.type.subscriber" configuration="puphpet" />
+        </service>
+    </services>
+
+</container>

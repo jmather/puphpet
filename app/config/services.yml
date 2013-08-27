@@ -1,0 +1,4 @@
+services:
+    property_accessor:
+      class: %property_accessor.class%
+      arguments: [true]

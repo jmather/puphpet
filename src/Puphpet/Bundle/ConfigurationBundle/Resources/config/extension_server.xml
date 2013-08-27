@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="config.ext.server.ns">Puphpet\Bundle\ConfigurationBundle\Extension\Server</parameter>
+    </parameters>
+
+    <services>
+        <!--
+        configuration extension
+        extension supports:
+        {
+          "server":
+            "packages": [
+              "package-1",
+              "package-X"
+            ]
+        }
+        -->
+        <service id="configuration.extension.server" class="%config.ext.server.ns%\ServerDto">
+            <tag name="configuration.extension" configuration="server" />
+        </service>
+
+        <service id="configuration.type.extension.server" class="%config.ext.server.ns%\Form\EventListener\ServerTypeSubscriber">
+            <tag name="configuration.type.subscriber" />
+        </service>
+    </services>
+
+</container>

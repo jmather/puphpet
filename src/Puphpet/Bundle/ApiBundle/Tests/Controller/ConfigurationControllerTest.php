@@ -20,7 +20,7 @@ class ConfigurationControllerTest extends WebTestCase
             array(), // parameters
             array(), // files
             array(), //server
-            json_encode(['configuration' => ['foo' => 'bar']])
+            json_encode(['configuration' => ['server' => ['packages' => []]]])
         );
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -29,6 +29,38 @@ class ConfigurationControllerTest extends WebTestCase
         $this->assertInternalType('array', $decoded);
         $this->assertArrayHasKey('result', $decoded);
         $this->assertTrue($decoded['result']);
+    }
+
+    public function testInvalideConfiguration()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(
+            'POST',
+            '/api/configuration/validate',
+            array(), // parameters
+            array(), // files
+            array(), //server
+            json_encode(['configuration' => ['unknown' => ['packages' => []]]])
+        );
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testIncompleteConfiguration()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(
+            'POST',
+            '/api/configuration/validate',
+            array(), // parameters
+            array(), // files
+            array(), //server
+            json_encode([])
+        );
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
     private function parseResult(Client $client)

@@ -5,6 +5,8 @@ namespace Puphpet\Bundle\ApiBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorBuilder;
 
 class ConfigurationController extends Controller
 {
@@ -17,21 +19,45 @@ class ConfigurationController extends Controller
      */
     public function validateAction(Request $request)
     {
-        // just a dummy ...
-        $body = json_decode($request->getContent(), true);
+        // just prototyping, very hacky ...
+        // we should use FOSRestBundle to simplify this approach
+        if ('POST' == $request->getMethod()) {
+            $body = json_decode($request->getContent(), true);
 
-        if (!is_array($body)) {
-            return new JsonResponse(['result' => false]);
+            if (!is_array($body)) {
+                return new JsonResponse(['result' => false, 'error' => ['error-code' => '001']], 400);
+            }
+
+            if (!array_key_exists('configuration', $body)) {
+                return new JsonResponse(['result' => false, 'error' => ['error-code' => '002']], 400);
+            }
+
+            $requestedConfiguration = $body['configuration'];
+
+
+        } else {
+            // tmp hack for being able to call the action with GET
+            // @TODO remove this possibilty after the validate method is limited to POST requests
+            $requestedConfiguration = json_decode($request->query->get('configuration'), true);
         }
 
-        if (!array_key_exists('configuration', $body)) {
-            return new JsonResponse(['result' => false]);
+        if (!is_array($requestedConfiguration)) {
+            return new JsonResponse(['result' => false, 'error' => ['error-code' => '003']], 400);
         }
 
-        $configuration = $body['configuration'];
+        $configuration = $this->get('configuration.configuration');
 
-        $this->get('logger')->debug('INCOMING: ' . var_export($configuration, true));
+        $form = $this->createForm($this->get('configuration.type.configuration'), $configuration);
+        $form->submit($requestedConfiguration);
 
-        return new JsonResponse(['result' => is_array($configuration)]);
+        if ($form->isValid()) {
+            $this->get('logger')->debug('INCOMING: ' . var_export($configuration, true));
+
+            return new JsonResponse(['result' => true]);
+        }
+
+        $this->get('logger')->error('User configuration invalid: ' . $form->getErrorsAsString());
+
+        return new JsonResponse(['result' => false, 'error' => ['error-code' => '004']], 400);
     }
 }

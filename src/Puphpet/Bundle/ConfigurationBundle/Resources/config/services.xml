@@ -8,13 +8,16 @@
     <parameters>
         <parameter key="puphpet_configuration.example.class">Puphpet\Bundle\ConfigurationBundle\Example</parameter>
     </parameters>
+    -->
 
     <services>
-        <service id="puphpet_configuration.example" class="%puphpet_configuration.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="configuration.configuration" class="Puphpet\Bundle\ConfigurationBundle\Dto\ConfigurationDto">
+            <argument type="collection"/>
+        </service>
+
+        <service id="configuration.type.configuration" class="Puphpet\Bundle\ConfigurationBundle\Dto\Form\Type\ConfigurationType">
+            <argument type="collection"/>
         </service>
     </services>
-    -->
+
 </container>
