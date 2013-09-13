@@ -17,7 +17,7 @@ class ConfigurationController extends Controller
      *
      * @return JsonResponse
      */
-    public function validateAction(Request $request)
+    public function validateAction(Request $request, $edition)
     {
         // just prototyping, very hacky ...
         // we should use FOSRestBundle to simplify this approach
@@ -45,9 +45,9 @@ class ConfigurationController extends Controller
             return new JsonResponse(['result' => false, 'error' => ['error-code' => '003']], 400);
         }
 
-        $configuration = $this->get('configuration.configuration');
+        $configuration = $this->get('configuration.builder.'.$edition)->build();
 
-        $form = $this->createForm($this->get('configuration.type.configuration'), $configuration);
+        $form = $this->createForm($this->get('configuration.type.'.$edition), $configuration);
         $form->submit($requestedConfiguration);
 
         if ($form->isValid()) {

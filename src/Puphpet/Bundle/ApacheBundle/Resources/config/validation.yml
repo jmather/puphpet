@@ -1,0 +1,29 @@
+Puphpet\Bundle\ApacheBundle\Dto\ApacheDto:
+    properties:
+        modules:
+            - Type:
+                type: array
+                message: apache.dto.modules.no_array
+
+Puphpet\Bundle\ApacheBundle\Dto\VhostDto:
+    properties:
+        serverName:
+            - NotBlank: ~
+            - Type:
+                type: string
+            - Regex:
+                pattern: "/^\w+$/"
+        serverAliases:
+            - Type:
+                type: array
+        documentRoot:
+            - NotBlank: ~
+            - Regex:
+                pattern: "/^\w+$/"
+        port:
+            - NotBlank: ~
+            - Type:
+                type: int
+        envVars:
+            - Type:
+                type: array

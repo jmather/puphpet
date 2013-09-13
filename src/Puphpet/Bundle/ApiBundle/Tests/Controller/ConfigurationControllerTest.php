@@ -10,17 +10,43 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ConfigurationControllerTest extends WebTestCase
 {
+    /**
+     * @group valid
+     */
     public function testValidateCorrectConfiguration()
     {
         $client = static::createClient();
 
         $crawler = $client->request(
             'POST',
-            '/api/configuration/validate',
+            '/api/configuration/default/validate',
             array(), // parameters
             array(), // files
             array(), //server
-            json_encode(['configuration' => ['server' => ['packages' => []]]])
+            json_encode(
+                [
+                    'configuration' =>
+                    [
+                        'server' => ['packages' => []],
+
+                        'apache' => [
+                            'modules' => ['rewrite', 'ssl'],
+
+                            'vhosts' => [
+                                [
+                                    'server_name' => 'vhost1.example.com',
+                                    'server_aliases' => ['alias1.example.com', 'www.example.com'],
+                                    'document_root' => '/var/www/project',
+                                    'port' => 80,
+                                    'env_vars' => ['foo' => 'bar']
+                                ]
+                            ]
+
+                        ]// end apache
+
+                    ]
+                ]
+            )
         );
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -37,7 +63,7 @@ class ConfigurationControllerTest extends WebTestCase
 
         $crawler = $client->request(
             'POST',
-            '/api/configuration/validate',
+            '/api/configuration/default/validate',
             array(), // parameters
             array(), // files
             array(), //server
@@ -53,7 +79,7 @@ class ConfigurationControllerTest extends WebTestCase
 
         $crawler = $client->request(
             'POST',
-            '/api/configuration/validate',
+            '/api/configuration/default/validate',
             array(), // parameters
             array(), // files
             array(), //server

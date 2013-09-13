@@ -1,0 +1,43 @@
+{% form_theme form _self %}
+
+<section>
+
+    <div class="page-header">
+        <h1 id="http-server">HTTP Server</h1>
+    </div>
+
+    <!-- HTTP Server / Apache / Modules -->
+    <div class="row">
+        <div class="col-xs-9">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Apache Modules</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row form-group">
+                        <div class="col-xs-12">
+                            <label for="apache-modules">Apache Modules</label>
+
+                            {{ form_widget(form.apache.modules) }}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-3 right-panel"></div>
+    </div>
+</section>
+
+{#
+                            <select id="apache-modules" name="apache[modules][]" multiple
+                                    class="form-control select-tags">
+                                {% for module_choice in form.apache.modules.vars.choices %}
+                                    <option value="{{ module_choice.value }}"
+                                            {% if module in apache.selected_modules %}selected{% endif %}>{{ module_choice.label }}</option>
+                                {% endfor %}
+                            </select>
+
+#}

@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Simple DTO class which holds all other DTOs of the extensions.
  *
- * A DTO is enabled by defining its server in this way:
+ * A DTO is enabled by defining its service in this way:
  *
  * <service id="configuration.extension.xxx" class="%path%\XXXDto">
  *   <tag name="configuration.extension" configuration="xxx" />
@@ -37,7 +37,12 @@ class ConfigurationDto
 
     public function __call($method, array $arguments)
     {
-        // getter!?
+        // property access
+        if (array_key_exists($method, $this->configuration)) {
+            return $this->configuration[$method];
+        }
+
+        // setter/getter!?
         $ter = substr($method, 0, 3);
         $name = lcfirst(substr($method, 3));
 
@@ -52,5 +57,14 @@ class ConfigurationDto
         } else {
             throw new \InvalidArgumentException(sprintf('Invalid operation on Configuration found "%s"', $ter));
         }
+    }
+
+    public function get($name)
+    {
+        if (!array_key_exists($name, $this->configuration)) {
+            throw new \InvalidArgumentException(sprintf('Configuration does not support "%s"', $name));
+        }
+
+        return $this->configuration[$name];
     }
 }

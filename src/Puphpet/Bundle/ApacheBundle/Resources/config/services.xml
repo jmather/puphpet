@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="apache.type" class="Puphpet\Bundle\ApacheBundle\Form\Type\ApacheType">
+            <argument>%apache.type.modules%</argument>
+        </service>
+
+        <service id="configuration.extension.apache" class="Puphpet\Bundle\ApacheBundle\Dto\ApacheDto">
+            <tag name="configuration.extension" configuration="apache"/>
+        </service>
+
+        <service id="configuration.type.extension.apache" class="Puphpet\Bundle\ApacheBundle\Form\EventListener\ApacheTypeSubscriber">
+            <tag name="configuration.type.subscriber" edition="default"/>
+            <argument type="service" id="apache.type" />
+        </service>
+
+    </services>
+
+</container>

@@ -19,13 +19,33 @@ class ConfigurationTypeSubscriberPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $types = array();
         $subscribers = array();
 
-        foreach ($container->findTaggedServiceIds('configuration.type.subscriber') as $id => $attributes) {
-            $subscribers[] = $container->getDefinition($id);
+        // fetch configuration types first, which get the subscribers assigned
+        foreach ($container->findTaggedServiceIds('configuration.type') as $id => $attributes) {
+            $edition = isset($attributes[0]['edition']) ? $attributes[0]['edition'] : 'default';
+
+            $types[$edition] = $container->getDefinition($id);
         }
 
-        $configuration = $container->getDefinition('configuration.type.configuration');
-        $configuration->replaceArgument(0, $subscribers);
+        // fetch all form subscribers, group them by edition
+        foreach ($container->findTaggedServiceIds('configuration.type.subscriber') as $id => $attributes) {
+            $edition = isset($attributes[0]['edition']) ? $attributes[0]['edition'] : 'default';
+
+            if (!array_key_exists($edition, $subscribers)) {
+                $subscribers[$edition] = array();
+            }
+
+            $subscribers[$edition][] = $container->getDefinition($id);
+        }
+
+        // map subscribers to types
+        foreach ($types as $edition => $typeDefinition) {
+
+            if (array_key_exists($edition, $subscribers)) {
+                $typeDefinition->replaceArgument(0, $subscribers[$edition]);
+            }
+        }
     }
 }

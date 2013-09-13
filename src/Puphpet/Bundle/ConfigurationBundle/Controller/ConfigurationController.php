@@ -13,6 +13,10 @@ class ConfigurationController extends Controller
      */
     public function showAction(Request $request)
     {
-        return [];
+        $configuration = $this->get('configuration.builder.default')->build();
+
+        $form = $this->createForm($this->get('configuration.type.default'), $configuration);
+
+        return ['form' => $form->createView()];
     }
 }

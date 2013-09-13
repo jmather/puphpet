@@ -1,3 +1,11 @@
+puphpet_symfony_edition:
+    resource: "@PuphpetSymfonyEditionBundle/Resources/config/routing.xml"
+    prefix:   /
+
+puphpet_apache:
+    resource: "@PuphpetApacheBundle/Resources/config/routing.xml"
+    prefix:   /
+
 puphpet_api:
     resource: "@PuphpetApiBundle/Resources/config/routing.yml"
     prefix:   /api

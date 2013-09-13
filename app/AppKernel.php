@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Puphpet\Bundle\ConfigurationBundle\PuphpetConfigurationBundle(),
             new Puphpet\Bundle\ApiBundle\PuphpetApiBundle(),
+            new Puphpet\Bundle\ApacheBundle\PuphpetApacheBundle(),
+            new Puphpet\Bundle\SymfonyEditionBundle\PuphpetSymfonyEditionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,5 +1,14 @@
 {% extends 'PuphpetConfigurationBundle::layout.html.twig' %}
 
 {% block content %}
-Hello PuPHPet Rewrite!
+
+    Hello PuPHPet Rewrite!
+
+    {# @TODO just prototyping - has to be refactored #}
+    {{ include(
+    'PuphpetApacheBundle:Apache:form.html.twig'
+    ) }}
+
+    {{ form_rest(form) }}
+
 {% endblock %}

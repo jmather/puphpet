@@ -15,8 +15,14 @@
             <argument type="collection"/>
         </service>
 
-        <service id="configuration.type.configuration" class="Puphpet\Bundle\ConfigurationBundle\Dto\Form\Type\ConfigurationType">
+        <service id="configuration.builder.default" class="Puphpet\Bundle\ConfigurationBundle\Configuration\ConfigurationBuilder">
+            <argument type="service" id="configuration.configuration"/>
+            <tag name="configuration.builder"/>
+        </service>
+
+        <service id="configuration.type.default" class="Puphpet\Bundle\ConfigurationBundle\Dto\Form\Type\ConfigurationType">
             <argument type="collection"/>
+            <tag name="configuration.type"/>
         </service>
     </services>
 

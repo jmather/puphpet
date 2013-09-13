@@ -1,4 +1,4 @@
 api.configuration.validate:
-    pattern:   /configuration/validate
-    defaults:  { _controller: PuphpetApiBundle:Configuration:validate }
+    pattern:   /configuration/{edition}/validate
+    defaults:  { _controller: PuphpetApiBundle:Configuration:validate, edition: default }
     methods: [POST]
